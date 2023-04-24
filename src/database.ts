@@ -1,4 +1,4 @@
-import { TUser, TProduct, TPurchase } from "./types";
+import { TUser, TProduct, TPurchase, CATEGORY } from "./types";
 
 export const users: TUser[] = [
   {
@@ -23,19 +23,19 @@ export const product: TProduct[] = [
     id: "mouse",
     name: "mouse-zica",
     price: "R$ 120,00",
-    category: "eletronicos",
+    category: CATEGORY.ELECTRONICS,
   },
   {
     id: "teclado",
     name: "teclado-gamer",
     price: "R$ 180,00",
-    category: "eletronicos",
+    category: CATEGORY.ELECTRONICS,
   },
   {
     id: "fogão",
     name: "fogão-eletrico",
     price: "R$ 800,00",
-    category: "eletrodomesticos",
+    category: CATEGORY.APPLIANCES,
   }
 ];
 
@@ -60,3 +60,58 @@ export const purchase: TPurchase[] = [
     totalPricce: "R$ 800,00",
     },
 ]
+
+// USER
+
+export function createUser( id:string, email:string, password:string){
+  const newUser = {id, email, password}
+  users.push(newUser)
+  return console.log("cadastro realizado com sucesso")
+
+}
+
+export function getAllUsers(): TUser[]{
+  return users
+}
+ // PRODUCT
+
+ export function createProduct(id: string, name: string, price: string, category: CATEGORY){
+
+  const newProduct = {id, name, price, category}
+  product.push(newProduct)
+
+  return console.log("Produto criado com sucesso")
+ }
+
+
+export function getAllProduct(): TProduct[]{
+  return product
+}
+
+export function getProductId(id: string): TProduct | undefined {
+  
+  return product.find(product => product.id === id )
+}
+
+export function queryProductsByName(query: string): TProduct[] {
+  const queryLowerCase = query.toLowerCase()
+
+  return product.filter(product => product.name.toLowerCase().includes(queryLowerCase))
+}
+
+// PURCHASE
+
+export function createPurchase(userId: string, productId: string, quantity: string, totalPricce: string){
+
+  const newPurchase = {userId, productId, quantity, totalPricce}
+  purchase.push(newPurchase)
+
+  return console.log("Compra realizada com sucesso")
+
+}
+
+export function getAllPurchasesFromUserId(userIdToSearch: string): any[]{
+  const userPurchase = purchase.filter(purchase => purchase.userId === userIdToSearch)
+  return userPurchase
+} 
+
